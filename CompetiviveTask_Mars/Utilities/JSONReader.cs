@@ -21,10 +21,17 @@ namespace CompetiviveTask_Mars.Utilities
         {
             using StreamReader reader = new(jsonFilePath);
             var json = reader.ReadToEnd();
-            //Education education = JsonConvert.DeserializeObject<Education>(json);
-
+            
             List<EducationDM> education = JsonConvert.DeserializeObject<List<EducationDM>>(json);
             return education;
+        }
+        public List<CertificationDM> ReadCJsonData()
+        {
+            using StreamReader reader = new(jsonFilePath);
+            var json = reader.ReadToEnd();
+           
+            List<CertificationDM> certification = JsonConvert.DeserializeObject<List<CertificationDM>>(json);
+            return certification;
         }
     }
 }

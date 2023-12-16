@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using CompetiviveTask_Mars.DataModel;
+using CompetiviveTask_Mars.Pages;
 
 namespace CompetiviveTask_Mars.Utilities
 {
@@ -34,7 +36,7 @@ namespace CompetiviveTask_Mars.Utilities
             extent.AttachReporter(htmlReporter);
             extent.AddSystemInfo("Host Name", "LocalHost");
             extent.AddSystemInfo("Environment", "QA");
-            extent.AddSystemInfo("UserName", "TestUser");
+            extent.AddSystemInfo("UserName", "Jaya");
         }
 
         [OneTimeTearDown]
@@ -60,7 +62,7 @@ namespace CompetiviveTask_Mars.Utilities
         }
         public void Close()
         {
-           driver.Quit();
+            driver.Quit();
         }
 
         [TearDown]
@@ -69,15 +71,17 @@ namespace CompetiviveTask_Mars.Utilities
         {
             var status = TestContext.CurrentContext.Result.Outcome.Status;
             string stacktrace;
+
             if (string.IsNullOrEmpty(TestContext.CurrentContext.Result.StackTrace))
             {
-               stacktrace = "";
+                stacktrace = "";
             }
             else
             {
-                stacktrace=string.Format("{0}", TestContext.CurrentContext.Result.StackTrace);
+                stacktrace = string.Format("{0}", TestContext.CurrentContext.Result.StackTrace);
             }
             Status logstatus;
+
             switch (status)
             {
                 case TestStatus.Failed:
@@ -85,7 +89,7 @@ namespace CompetiviveTask_Mars.Utilities
                     DateTime time = DateTime.Now;
                     String fileName = "Screenshot_" + time.ToString("h_mm_ss") + ".png";
                     String screenShotPath = Capture(driver, fileName);
-                    test.Log(Status.Fail, "Fail");
+                    test.Log(Status.Fail, "Fail");                   
                     test.Log(Status.Fail, "Snapshot below: " + test.AddScreenCaptureFromPath(@"Screenshots\\" + fileName));
                     break;
                 case TestStatus.Inconclusive:
@@ -99,7 +103,7 @@ namespace CompetiviveTask_Mars.Utilities
                     time = DateTime.Now;
                     fileName = "Screenshot_" + time.ToString("h_mm_ss") + ".png";
                     screenShotPath = Capture(driver, fileName);
-                    test.Log(Status.Pass, "Pass");
+                    test.Log(Status.Pass, "Pass");                    
                     test.Log(Status.Pass, "Snapshot below: " + test.AddScreenCaptureFromPath(@"Screenshots\\" + fileName));
 
                     break;
@@ -111,8 +115,8 @@ namespace CompetiviveTask_Mars.Utilities
         }
         public static string Capture(IWebDriver driver, String screenShotName)
         {
-            ITakesScreenshot ts = (ITakesScreenshot)driver;          
-           
+            ITakesScreenshot ts = (ITakesScreenshot)driver;
+
             Screenshot screenshot = ts.GetScreenshot();
             var pth = Assembly.GetCallingAssembly().Location;
             var actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
@@ -126,5 +130,5 @@ namespace CompetiviveTask_Mars.Utilities
         }
     }
 
-    
+
 }
