@@ -8,11 +8,11 @@ namespace CompetiviveTask_Mars.DataModel
 {
     public class EducationDM
     {
-        public string College { get; set; } = string.Empty;
-        public string Country { get; set; } = string.Empty;
-        public string Title { get; set; } = string.Empty;
-        public string Degree { get; set; } = string.Empty;
-        public string Year { get; set; } = string.Empty;
+        public string college { get; set; } = string.Empty;
+        public string country { get; set; } = string.Empty;
+        public string title { get; set; } = string.Empty;
+        public string degree { get; set; } = string.Empty;
+        public string year { get; set; } = string.Empty;
 
     }
 }

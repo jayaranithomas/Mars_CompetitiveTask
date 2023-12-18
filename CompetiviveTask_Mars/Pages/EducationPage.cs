@@ -2,6 +2,7 @@
 using CompetiviveTask_Mars.Utilities;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -86,8 +87,8 @@ namespace CompetiviveTask_Mars.Pages
             for (int i = 1; i <= rowcount;)
             {
 
-                IWebElement DeleteButton = driver.FindElement(By.XPath("//div[@data-tab='third']//tbody[1]//i[@class='remove icon']"));
-                DeleteButton.Click();
+                IWebElement deleteButton = driver.FindElement(By.XPath("//div[@data-tab='third']//tbody[1]//i[@class='remove icon']"));
+                deleteButton.Click();
 
                 rowcount--;
 
@@ -258,8 +259,8 @@ namespace CompetiviveTask_Mars.Pages
             AddEducation(collegeName, country, title, degree, yearOfGrad);
             cancelFlag = 0;
 
-            IWebElement CancelButton = driver.FindElement(By.XPath("//div[@data-tab='third']//input[@value='Cancel']"));
-            CancelButton.Click();
+            IWebElement cancelButton = driver.FindElement(By.XPath("//div[@data-tab='third']//input[@value='Cancel']"));
+            cancelButton.Click();
 
             Thread.Sleep(1000);
             IWebElement lastRecord = driver.FindElement(By.XPath("//div[@data-tab='third']//tbody[last()]/tr/td[2]"));
@@ -278,62 +279,59 @@ namespace CompetiviveTask_Mars.Pages
             IWebElement editButton = driver.FindElement(By.XPath("//div[@data-tab='third']//tbody[1]//i[@class='outline write icon']"));
             editButton.Click();
 
-            IWebElement CollegeTextBox = driver.FindElement(By.Name("instituteName"));
-            IWebElement DegreeTextBox = driver.FindElement(By.Name("degree"));
+            IWebElement collegeTextBox = driver.FindElement(By.Name("instituteName"));
+            IWebElement degreeTextBox = driver.FindElement(By.Name("degree"));
             IWebElement chooseCountryDD = driver.FindElement(By.Name("country"));
             IWebElement chooseTitleDD = driver.FindElement(By.Name("title"));
             IWebElement chooseYearDD = driver.FindElement(By.Name("yearOfGraduation"));
 
+            if (string.IsNullOrEmpty(collegeName))
+            {
+                var actions = new OpenQA.Selenium.Interactions.Actions(driver);
+                actions.Click(collegeTextBox);
+                actions.KeyDown(Keys.Control).SendKeys("a").KeyUp(Keys.Control).SendKeys(Keys.Delete);
+                actions.Perform();
+            }
+            else
+            {
+                collegeTextBox.Clear();
+                collegeTextBox.SendKeys(collegeName);
+            }
+            if (string.IsNullOrEmpty(degree))
+            {
+                var actions = new OpenQA.Selenium.Interactions.Actions(driver);
+                actions.Click(degreeTextBox);
+                actions.KeyDown(Keys.Control).SendKeys("a").KeyUp(Keys.Control).SendKeys(Keys.Delete);
+                actions.Perform();
+            }
+            else
+            {
+                degreeTextBox.Clear();
+                degreeTextBox.SendKeys(degree);
+            }
 
-            CollegeTextBox.Clear();
-            CollegeTextBox.SendKeys(collegeName);
-
-            DegreeTextBox.Clear();           
-            DegreeTextBox.SendKeys(degree);
-
+            chooseCountryDD.Click();
             if (!string.IsNullOrEmpty(country))
-            {
-
-                chooseCountryDD.Click();
                 chooseCountryDD.SendKeys(country);
-                chooseCountryDD.Click();
-            }
+                        
             else
-            {
-                
-                chooseCountryDD.Click();
                 chooseCountryDD.SendKeys("Country of College / University");
-                chooseCountryDD.Click();
-            }
+            chooseCountryDD.Click();
 
+            chooseTitleDD.Click();
             if (!string.IsNullOrEmpty(title))
-            {
-                
-                chooseTitleDD.Click();
                 chooseTitleDD.SendKeys(title);
-                chooseTitleDD.Click();
-            }
             else
-            {
-                chooseTitleDD.Click();
                 chooseTitleDD.SendKeys("Title");
-                chooseTitleDD.Click();
-            }
+            chooseTitleDD.Click();
 
-            
+            chooseYearDD.Click();
             if (!string.IsNullOrEmpty(yearOfGrad))
-            {
-                
-                chooseYearDD.Click();
                 chooseYearDD.SendKeys(yearOfGrad);
-                chooseYearDD.Click();
-            }
             else
-            {
-                chooseYearDD.Click();
                 chooseYearDD.SendKeys("Year of graduation");
-                chooseYearDD.Click();
-            }
+            chooseYearDD.Click();
+
             Thread.Sleep(2000);
 
             if (cancelFlag != 1)
@@ -391,7 +389,7 @@ namespace CompetiviveTask_Mars.Pages
         public void UpdateExistingEducationRecordWithNULLValuesTextBoxesAndValidInDropdowns(string collegeName, string country, string title, string degree, string yearOfGrad)
         {
             EditEducationRecord(collegeName, country, title, degree, yearOfGrad);
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
 
             IWebElement messageBox = driver.FindElement(By.XPath("//div[@class='ns-box-inner']"));
             popupMessage = messageBox.Text;
@@ -485,8 +483,8 @@ namespace CompetiviveTask_Mars.Pages
             EditEducationRecord(collegeName, country, title, degree, yearOfGrad);
             cancelFlag = 0;
 
-            IWebElement CancelButton = driver.FindElement(By.XPath("//div[@data-tab='third']//input[@value='Cancel']"));
-            CancelButton.Click();
+            IWebElement cancelButton = driver.FindElement(By.XPath("//div[@data-tab='third']//input[@value='Cancel']"));
+            cancelButton.Click();
 
             Thread.Sleep(1000);
             IWebElement firstRecord = driver.FindElement(By.XPath("//div[@data-tab='third']//tbody[1]/tr/td[2]"));

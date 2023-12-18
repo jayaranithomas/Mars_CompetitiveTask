@@ -8,9 +8,9 @@ namespace CompetiviveTask_Mars.DataModel
 {
     public class CertificationDM
     {
-        public string CertificateName { get; set; } = string.Empty;
-        public string CertifiedFrom { get; set; } = string.Empty;
-        public string Year { get; set; } = string.Empty;
+        public string certificateName { get; set; } = string.Empty;
+        public string certifiedFrom { get; set; } = string.Empty;
+        public string year { get; set; } = string.Empty;
 
     }
 }

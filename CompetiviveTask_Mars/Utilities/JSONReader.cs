@@ -21,7 +21,7 @@ namespace CompetiviveTask_Mars.Utilities
         {
             using StreamReader reader = new(jsonFilePath);
             var json = reader.ReadToEnd();
-            
+
             List<EducationDM> education = JsonConvert.DeserializeObject<List<EducationDM>>(json);
             return education;
         }
@@ -29,7 +29,7 @@ namespace CompetiviveTask_Mars.Utilities
         {
             using StreamReader reader = new(jsonFilePath);
             var json = reader.ReadToEnd();
-           
+
             List<CertificationDM> certification = JsonConvert.DeserializeObject<List<CertificationDM>>(json);
             return certification;
         }

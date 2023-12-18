@@ -19,7 +19,8 @@ namespace CompetiviveTask_Mars.Utilities
     [SetUpFixture]
     public class CommonDriver
     {
-        public static IWebDriver driver;
+        public static IWebDriver driver;     
+
         protected ExtentReports extent;
         protected ExtentTest test;
 
@@ -36,7 +37,7 @@ namespace CompetiviveTask_Mars.Utilities
             extent.AttachReporter(htmlReporter);
             extent.AddSystemInfo("Host Name", "LocalHost");
             extent.AddSystemInfo("Environment", "QA");
-            extent.AddSystemInfo("UserName", "Jaya");
+            extent.AddSystemInfo("UserName", "MarsTester");
         }
 
         [OneTimeTearDown]
@@ -50,6 +51,14 @@ namespace CompetiviveTask_Mars.Utilities
         public void BeforeTest()
         {
             test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
+
+            HomePage homeObj = new HomePage();
+            LoginPage loginObj = new LoginPage();
+
+            Initialize();
+            homeObj.SignInAction();
+            loginObj.LoginActions();
+            Thread.Sleep(1000);
         }
 
         public void Initialize()
