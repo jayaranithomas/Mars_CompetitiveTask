@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework.Interfaces;
 using AventStack.ExtentReports;
+using System.Reflection;
 
 namespace CompetiviveTask_Mars.Test
 {
@@ -25,7 +26,13 @@ namespace CompetiviveTask_Mars.Test
         [OneTimeSetUp]
         public void ReadJSON()
         {
-            JSONReader jsonObj = new JSONReader(@"F:\Jaya_IC\MarsTask2\Mars_CompetitiveTask\CompetiviveTask_Mars\TestData\Educationdata.json");
+            string path = Assembly.GetCallingAssembly().Location;
+            string actualPath = path.Substring(0, path.LastIndexOf("bin"));
+            string projectPath = new Uri(actualPath).LocalPath;
+           
+            string dataPath = projectPath + @"TestData\Educationdata.json";
+
+            JSONReader jsonObj = new JSONReader(dataPath);          
 
             educationRecord = jsonObj.ReadJsonData();
 
